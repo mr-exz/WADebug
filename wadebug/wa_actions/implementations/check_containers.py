@@ -23,6 +23,10 @@ class CheckContainersAreUp(WAAction):
         stopped_sql_containers = []
 
         def get_all_running_wa_containers():
+
+            wa_webapp_container_tag = docker_utils.WA_WEBAPP_CONTAINER_TAG if config["global"]["images"]["web"] is None else config["global"]["images"]["web"]
+            wa_coreapp_container_tag = docker_utils.WA_COREAPP_CONTAINER_TAG if config["global"]["images"]["core"] is None else config["global"]["images"]["core"]
+
             containers = docker_utils.get_wa_containers()
             versions_to_wa_containers_dict = defaultdict(lambda: defaultdict(list))
             for wa_container in containers:
@@ -30,8 +34,8 @@ class CheckContainersAreUp(WAAction):
                 container_type = wa_container.container_type
                 if docker_utils.is_container_running(container):
                     if (
-                        docker_utils.WA_WEBAPP_CONTAINER_TAG == container_type
-                        or docker_utils.WA_COREAPP_CONTAINER_TAG == container_type
+                        wa_webapp_container_tag == container_type
+                        or wa_coreapp_container_tag == container_type
                     ):
                         version = docker_utils.get_wa_version_from_container(container)
                         versions_to_wa_containers_dict[version[1]][
