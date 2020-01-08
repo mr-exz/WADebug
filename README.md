@@ -53,6 +53,20 @@ To run tests in a particular module:
 
 (`-v` turns on verbose mode, which shows every test case in the module)
 
+## In Vagrant
+
+```bash
+# vagrant up
+# vagrant ssh
+# sudo -s
+# cd /opt/WADebug/
+# pip3 install tox
+# tox -epy3
+# source .tox/py3/bin/activate
+# pip install --editable .
+# wadebug --version
+```
+
 
 # Dependencies
 
